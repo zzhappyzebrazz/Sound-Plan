@@ -9,14 +9,14 @@ class Listener(models.Model):
     password = models.CharField(max_length=50, blank=False)
     phone = models.CharField(max_length=20)
     address = models.TextField()
-    playlist = models.ForeignKey('Playlist', on_delete=models.PROTECT)
+    # playlist = models.ForeignKey('Playlist', on_delete=models.PROTECT)
     
     def __str__(self):
         return self.first_name + ' ' + self.last_name
     
 class Playlist(models.Model):
     playlist_name = models.CharField(max_length=50, blank=False)
-    # listener = models.ForeignKey(Listener, on_delete=models.PROTECT)
+    listener = models.ForeignKey(Listener, default='', on_delete=models.CASCADE)
     songs = models.ManyToManyField(Song)
 
     def __str__(self):

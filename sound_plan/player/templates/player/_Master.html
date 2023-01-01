@@ -61,29 +61,26 @@
                                 <ul>
                                     <li><a href="{% url 'player:index' %}">Home</a></li>
                                     <li><a href="{% url 'player:albums-store' %}">Albums</a></li>
-                                    <li><a href="#">Pages</a>
-                                        <ul class="dropdown">
-                                            <li><a href="{% url 'player:index' %}">Home</a></li>
-                                            <li><a href="{% url 'player:albums-store' %}">Albums</a></li>
-                                            <li><a href="{% url 'player:event' %}">Events</a></li>
-                                            <li><a href="{% url 'player:blog' %}">News</a></li>
-                                            <li><a href="{% url 'player:contact' %}">Contact</a></li>
-                                            <li><a href="{% url 'player:elements' %}">Elements</a></li>
-                                            <li><a href="{% url 'listener:login' %}">Login</a></li>
-                                        </ul>
-                                    </li>
                                     <li><a href="{% url 'player:event' %}">Events</a></li>
                                     <li><a href="{% url 'player:blog' %}">News</a></li>
                                     <li><a href="{% url 'player:contact' %}">Contact</a></li>
+                                    {% if request.session.s_user %}
+                                    <li><a href="{% url 'listener:my_account' %}">My Account</a></li>
                                 </ul>
 
                                 <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center">
+                                    <div class="login-register-btn mr-50">
+                                        <a href="{% url 'listener:logout' %}" id="loginBtn">Logout</a>
+                                    </div>
+                                    {% else %}
+                                </ul>
                                 <div class="login-register-cart-button d-flex align-items-center">
                                     <!-- Login/Register -->
                                     <div class="login-register-btn mr-50">
                                         <a href="{% url 'listener:login' %}" id="loginBtn">Login / Register</a>
                                     </div>
-
+                                    {% endif %}
                                     <!-- Cart Button -->
                                     <div class="cart-btn">
                                         <p><span class="icon-shopping-cart"></span> <span class="quantity">1</span></p>

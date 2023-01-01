@@ -2,11 +2,76 @@
 {% load static %}
 {% block main_content %}
 
+{% if is_register %}
+
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/breadcumb3.jpg' %});">
         <div class="bradcumbContent">
-            <p>See what’s new</p>
-            <h2>Login</h2>
+            <p>{{ headline1 }}</p>
+            <h2>{{ headline2 }}</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Login Area Start ##### -->
+    <section class="login-area section-padding-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="login-content">
+                        <h3>Welcome In!</h3>
+                        <!-- Login Form -->
+                        {% if result_register %}
+                        {{ result_register | safe }}
+                        {% endif %}
+                        <div class="login-form">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ forms.first_name.label }}
+                                    {{ forms.first_name }}
+                                </div>
+                                <div class="form-group">
+                                    {{ forms.last_name.label }}
+                                    {{ forms.last_name }}
+                                </div>
+                                <div class="form-group">
+                                    {{ forms.email.label }}
+                                    {{ forms.email }}
+                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    {{ forms.password.label }}
+                                    {{ forms.password }}
+                                </div>
+                                <div class="form-group">
+                                    {{ forms.confirm_password.label }}
+                                    {{ forms.confirm_password }}
+                                </div>
+                                <div class="form-group">
+                                    {{ forms.phone.label }}
+                                    {{ forms.phone }}
+                                </div>
+                                <div class="form-group">
+                                    {{ forms.address.label }}
+                                    {{ forms.address }}
+                                </div>
+                                <button type="submit" class="btn oneMusic-btn mt-30">Register</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Login Area End ##### -->
+
+{% else %}
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>{{ headline1 }}</p>
+            <h2>{{ headline2 }}</h2>
         </div>
     </section>
     <!-- ##### Breadcumb Area End ##### -->
@@ -20,15 +85,19 @@
                         <h3>Welcome Back</h3>
                         <!-- Login Form -->
                         <div class="login-form">
-                            <form action="#" method="post">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="col-12">
+                                    {{ result_login|safe }}
+                                </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Email address</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter E-mail">
+                                    {{ forms.email.label }}
+                                    {{ forms.email }}
                                     <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                    {{ forms.password.label }}
+                                    {{ forms.password }}
                                 </div>
                                 <div>
                                     <a href="{% url 'listener:register' %}">Don't have an accoount? Register here!</a>
@@ -45,5 +114,7 @@
         </div>
     </section>
     <!-- ##### Login Area End ##### -->
+
+{% endif %}
 
 {% endblock %}
