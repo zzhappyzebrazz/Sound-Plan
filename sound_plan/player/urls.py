@@ -12,7 +12,5 @@ urlpatterns = [
     path('contact', contact, name="contact"),
     path('elements', elements, name="elements"),
     path('event', event, name="event"),
-    path('login', login, name="login"),
-
 
 ]

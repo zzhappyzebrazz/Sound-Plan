@@ -19,5 +19,3 @@ def elements(request):
 def event(request):
     return render(request, 'player/event.html')
 
-def login(request):
-    return render(request, 'player/login.html')
