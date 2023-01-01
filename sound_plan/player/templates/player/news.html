@@ -1,0 +1,149 @@
+{% extends 'player/_Master.html' %}
+{% load static %}
+{% block main_content %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>15 Latest News</p>
+            <h2>News</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Blog Area Start ##### -->
+    <div class="blog-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-9">
+                    
+                    {% for new in news %}
+                    <!-- Single Post Start -->
+                    <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
+                        <!-- Post Thumb -->
+                        <div class="blog-post-thumb mt-30">
+                            <a href="#"><img src="img/bg-img/blog1.jpg" alt=""></a>
+                            <!-- Post Date -->
+                            <div class="post-date">
+                                <span>{{ new.published_parsed.2 }}</span>
+                                <span>{{ new.published|slice:"16" }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Blog Content -->
+                        <div class="blog-content">
+                            <!-- Post Title -->
+                            <a href="{{ new.link }}" class="post-title">{{ new.title }}</a>
+                            <!-- Post Meta -->
+                            <div class="post-meta d-flex mb-30">
+                                <p class="post-author">By {{ new.publisher }}</p>
+                                <p class="tags">in {{ new.tags.0.term }}</p>
+                                <p class="tags">{{ forloop.counter }} Comments</p>
+                            </div>
+                            <!-- Post Excerpt -->
+                            <p>{{ new.summary }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    <!-- Pagination -->
+                    <div class="oneMusic-pagination-area wow fadeInUp" data-wow-delay="300ms">
+                        <nav>
+                            <ul class="pagination">
+                                {% comment %} <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                                <li class="page-item"><a class="page-link" href="#">02</a></li>
+                                <li class="page-item"><a class="page-link" href="#">03</a></li> {% endcomment %}
+                                {% if news.has_other_pages %}
+                                {% if news.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ news.previous_page_number }}">Previous</a>
+                                </li>
+                                {% else %}
+                                <div class="disable"><span></span></div>
+                                {% endif %}
+    
+                                {% for i in news.paginator.page_range %}
+                                {% if news.number == i %}
+                                    <li class="page-item active"><a class="page-link" href="?page={{ i }}&{{ url_search }}">{{ i }}</a></li>
+                                {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}&{{ url_search }}">{{ i }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+                            
+                                {% if news.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ news.next_page_number }}&{{ url_search }}">Next</a>
+                                </li>
+                                {% else %}
+                                <div class="disable"><span></span></div>
+                                {% endif %}
+                            
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-lg-3">
+                    <div class="blog-sidebar-area">
+
+                        <!-- Widget Area -->
+                        <div class="single-widget-area mb-30">
+                            <div class="widget-title">
+                                <h5>Categories</h5>
+                            </div>
+                            <div class="widget-content">
+                                <ul>
+                                    <li><a href="#">Music</a></li>
+                                    <li><a href="#">Events &amp; Press</a></li>
+                                    <li><a href="#">Festivals</a></li>
+                                    <li><a href="#">Lyfestyle</a></li>
+                                    <li><a href="#">Uncategorized</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Widget Area -->
+                        <div class="single-widget-area mb-30">
+                            <div class="widget-title">
+                                <h5>Archive</h5>
+                            </div>
+                            <div class="widget-content">
+                                <ul>
+                                    <li><a href="#">February 2018</a></li>
+                                    <li><a href="#">March 2018</a></li>
+                                    <li><a href="#">April 2018</a></li>
+                                    <li><a href="#">May 2018</a></li>
+                                    <li><a href="#">June 2018</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Widget Area -->
+                        <div class="single-widget-area mb-30">
+                            <div class="widget-title">
+                                <h5>Tags</h5>
+                            </div>
+                            <div class="widget-content">
+                                <ul class="tags">
+                                    <li><a href="#">music</a></li>
+                                    <li><a href="#">events</a></li>
+                                    <li><a href="#">artists</a></li>
+                                    <li><a href="#">press</a></li>
+                                    <li><a href="#">mp3</a></li>
+                                    <li><a href="#">videos</a></li>
+                                    <li><a href="#">concerts</a></li>
+                                    <li><a href="#">performers</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Blog Area End ##### -->
+
+{% endblock %}

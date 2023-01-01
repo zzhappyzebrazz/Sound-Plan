@@ -87,6 +87,9 @@
                     <div class="contact-form-area">
                         <form method="post">
                             {% csrf_token %}
+                            <div class="col-12">
+                                {{ result|safe }}
+                            </div>
                             <div class="row">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">

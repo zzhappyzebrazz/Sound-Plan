@@ -1,0 +1,45 @@
+{
+'title': 'New Music Releases and Upcoming Albums in 2023', 
+'title_detail': {
+    'type': 'text/plain',
+    'language': None,
+    'base': 'https://pitchfork.com/feed/feed-news/rss',
+    'value': 'New Music Releases and Upcoming Albums in 2023'
+    },
+'links': [{
+    'rel': 'alternate',
+    'type': 'text/html',
+    'href': 'https://pitchfork.com/news/new-album-releases'
+    }],
+'link': 'https://pitchfork.com/news/new-album-releases',
+'id': '620d628f1ddd2790bf93e803',
+'guidislink': False,
+'published': 'Sun, 01 Jan 2023 16:06:00 +0000',
+'published_parsed': time.struct_time(tm_year=2023, tm_mon=1, tm_mday=1, tm_hour=16, tm_min=6, tm_sec=0, tm_wday=6, tm_yday=1, tm_isdst=0),
+'media_content': [{}],
+'summary': 'A regularly updated guide to the new albums, EPs, mixtapes, and projects getting released in the coming weeks and months',
+'summary_detail': {'type': 'text/html', 'language': None, 'base': 'https://pitchfork.com/feed/feed-news/rss', 'value': 'A regularly updated guide to the new albums, EPs, mixtapes, and projects getting released in the coming weeks and months'},
+'tags': [{
+    'term': 'News',
+    'scheme': None, 
+    'label': None}],
+'authors': [{
+    'name': 'Pitchfork'
+    }],
+'author': 'Pitchfork',
+'author_detail': {
+    'name': 'Pitchfork'
+    },
+'publisher': 'Condé Nast',
+'publisher_detail': {
+    'name': 'Condé Nast'
+    },
+'media_thumbnail': [{
+    'url': 'https://media.pitchfork.com/photos/63a8a65324748f5eef492641/master/pass/Albums-2023.jpg',
+    'width': '2000',
+    'height': '1000'
+    }],
+'href': ''
+}
+dict_keys(['title', 'title_detail', 'links', 'link', 'id', 'guidislink', 'published', 'published_parsed', 'media_content', 'summary', 'summary_detail', 'tags', 'authors', 'author', 'author_detail', 'publisher', 'publisher_detail', 'media_thumbnail', 'href'])
+https://pitchfork.com/news/new-album-releases

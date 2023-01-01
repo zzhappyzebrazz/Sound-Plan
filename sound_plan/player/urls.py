@@ -8,7 +8,7 @@ app_name = 'player'
 urlpatterns = [
     path('', index, name="index"),
     path('albums-store', albums_store, name="albums-store"),
-    path('blog', blog, name="blog"),
+    path('news', news, name="news"),
     path('contact', contact, name="contact"),
     path('event', event, name="event"),
 
