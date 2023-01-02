@@ -34,9 +34,7 @@ def news(request):
     num_of_news_per_page = 5
     news = paginator(request, entries, num_of_news_per_page)
     print(len(entries))
-    print(entries[0])
-    print(entries[0].keys())
-    print(entries[0]['link'])
+
     return render(request, 'player/news.html', {
         'news' : news,
     })
