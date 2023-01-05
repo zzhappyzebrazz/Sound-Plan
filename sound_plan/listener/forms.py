@@ -38,6 +38,24 @@ class FormLogin(forms.Form):
         "class": "form-control", "placeholder": "Password",
     }))
 
+class FormUpdateInfo(forms.Form):
+    first_name = forms.CharField(max_length=264, label='First name', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "First name",
+    }))
+    last_name = forms.CharField(max_length=264, label='Last name', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "Last name",
+    }))
+    # email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={
+    #     "class": "form-control", "placeholder": "Email", "disabled" : 'true'
+    # }))
+
+    phone = forms.CharField(max_length=20, label='Phone number', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "Phone number",
+    }))
+    address = forms.CharField(label='Address', widget=forms.Textarea(attrs={
+        "class": "form-control", "placeholder": "Address", "rows": "3",
+    }))
+
 
 class FormUserChangePassword(forms.Form):
     old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput(attrs={

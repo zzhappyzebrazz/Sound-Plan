@@ -139,32 +139,113 @@ def register(request):
     
 def my_account(request):
     #TO-DO:
-    # Show user infomation
-    # Update user infomation
+
+
     # Change password
-    
-    if 's_user' in request.session:
-        user = request.session['s_user']
-        print(user)
-        info_forms = FormRegister(initial={
-            'first_name' : user['first_name'],
-            'last_name' : user['last_name'],
-            'email' : user['email'],
-            'phone' : user['phone'],
-            'address' : user['address'],
-        })
-        
-        info_forms.fields['email'].widget.attrs['readonly'] = True
-        
-        password_forms = FormUserChangePassword()
-        return render(request, 'player/my-account.html', {
-            'user' : user,
-            'info_forms' : info_forms,
-            'password_forms' : password_forms,
-        })
-    else:
+    if 's_user' not in request.session:
         print('User unregisterd')
         return redirect('player:index')
+    
+    # Show user infomation CHECK
+    user = request.session['s_user']
+    print(user)
+
+    info_forms = FormUpdateInfo(initial={
+        'first_name' : user['first_name'],
+        'last_name' : user['last_name'],
+        'phone' : user['phone'],
+        'address' : user['address'],
+    })
+            
+    # Update user infomation
+    result_update_info = ''
+    user_data = Listener.objects.get(id=user['id'])
+    print(user_data.password)
+    if request.POST.get('first_name'):
+        info_forms = FormUpdateInfo(request.POST)
+        if info_forms.is_valid():
+            print('Get valid POST from UPDATE')
+            # request.POST._mutable = True
+            # post = forms.save(commit=False)
+            first_name = info_forms.cleaned_data['first_name']
+            last_name = info_forms.cleaned_data['last_name']
+            phone = info_forms.cleaned_data['phone']
+            address = info_forms.cleaned_data['address']
+            
+            user_data.first_name = first_name
+            user_data.last_name = last_name
+            user_data.phone = phone
+            user_data.address = address
+            
+            user_data.save()
+            
+            #Update to sesstion
+            user['first_name'] = first_name
+            user['last_name'] = last_name
+            user['phone'] = phone
+            user['address'] = address
+            request.session['s_user'] = user            
+            print(user)
+            result_update_info = '''
+                <div class="alert alert-success" role="alert">
+                    Update User profile Success!!!
+                </div>
+                '''
+        else:
+            result_update_info = '''
+                <div class="alert alert-danger" role="alert">
+                    Plase Fill out the Form!!!
+                </div>
+            '''
+    
+    result_change_password = ''
+    password_forms = FormUserChangePassword()
+
+    if request.POST.get('old_password'):
+            password_forms = FormUserChangePassword(request.POST)
+            print(password_forms.errors)
+            if password_forms.is_valid():
+                print('Get valid POST from Change')
+                
+                old_password = hasher.encode(password_forms.cleaned_data['old_password'], 'magic string')
+                new_password = hasher.encode(password_forms.cleaned_data['new_password'], 'magic string')
+                confirm_password = hasher.encode(password_forms.cleaned_data['confirm_password'], 'magic string')
+                if old_password == user_data.password:
+                    if new_password == confirm_password:
+                        user_data.password = new_password
+                        user_data.save()
+                        result_change_password = '''
+                        <div class="alert alert-success" role="alert">
+                            Password Updated!!!
+                        </div>
+                        '''
+                        # return redirect('listener:logout')
+                    else:
+                        result_change_password = '''
+                        <div class="alert alert-danger" role="alert">
+                            Confirm Password Not Match!!!
+                        </div>
+                        '''
+                else:
+                    result_change_password = '''
+                    <div class="alert alert-danger" role="alert">
+                        Old Password Incorrect!!!
+                    </div>
+                    '''
+
+            else:
+                result_change_password = '''
+                    <div class="alert alert-danger" role="alert">
+                        Plase Fill out the Form!!!
+                    </div>
+                '''
+    return render(request, 'player/my-account.html', {
+        'user' : user,
+        'info_forms' : info_forms,
+        'password_forms' : password_forms,
+        'result_update_info' : result_update_info,
+        'result_change_password' : result_change_password,
+    })
 
 def logout(request):
     if 's_user' in request.session:

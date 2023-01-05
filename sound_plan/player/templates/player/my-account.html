@@ -19,6 +19,9 @@
                         <h3>Your Infomation</h3>
                         <div class="login-form">
                             <form method="post">
+                                <div class="col-md-12">
+                                    {{ result_update_info|safe }}
+                                </div>
                                 {% csrf_token %}
                                 <div class="form-group">
                                     {{ info_forms.first_name.label }}
@@ -29,8 +32,8 @@
                                     {{ info_forms.last_name }}
                                 </div>
                                 <div class="form-group">
-                                    {{ info_forms.email.label }}
-                                    {{ info_forms.email }}
+                                    <input class="form-control" type="text" placeholder="Email"
+                                        value="{{ request.session.s_user.email }}" disabled>
                                     <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
                                 </div>
                                 <div class="form-group">
@@ -41,7 +44,7 @@
                                     {{ info_forms.address.label }}
                                     {{ info_forms.address }}
                                 </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30">Update</button>
+                                <button type="submit" class="btn oneMusic-btn mt-30" name="btnUpdate">Update</button>
                             </form>
                         </div>
                     </div>
@@ -52,6 +55,9 @@
                         <div class="login-form">
                             <form method="post">
                                 {% csrf_token %}
+                                <div class="col-md-12">
+                                    {{ result_change_password|safe }}
+                                </div>
                                 <div class="form-group">
                                     {{ password_forms.old_password.label }}
                                     {{ password_forms.old_password }}
@@ -61,10 +67,10 @@
                                     {{ password_forms.new_password }}
                                 </div>
                                 <div class="form-group">
-                                    {{ password_forms.new_password.label }}
-                                    {{ password_forms.new_password }}
+                                    {{ password_forms.confirm_password.label }}
+                                    {{ password_forms.confirm_password }}
                                 </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30">Change</button>
+                                <button type="submit" class="btn oneMusic-btn mt-30" name="btnChangePassword">Change</button>
                             </form>
                         </div>
                     </div>
