@@ -1,33 +1,35 @@
-id,artist_name,event,avartar
-1,Ariana Grande,1,https://i.scdn.co/image/ab6761610000e5ebcdce7620dc940db079bf4952
-2,Adele,2,https://i.scdn.co/image/ab6761610000e5eb68f6e5892075d7f22615bd17
-3,BIGBANG,3,https://i.scdn.co/image/ab6761610000e5eb597a4257d0022e2ac837fa7d
-4,BLACKPINK,4,https://i.scdn.co/image/ab6761610000e5ebc9690bc711d04b3d4fd4b87c
-5,Đen,5,https://i.scdn.co/image/ab6761610000e5eb737b3f8838b053cff8c2c75e
-6,Bruno Mars,6,https://i.scdn.co/image/ab6761610000e5ebc36dd9eb55fb0db4911f25dd
-7,Sam Smith,7,https://i.scdn.co/image/ab6761610000e5eb10ca40ea0b0b5082dba0ff75
-8,Imagine Dragons,8,https://i.scdn.co/image/ab6761610000e5eb920dc1f617550de8388f368e
-9,Justin Timberlake,9,https://i.scdn.co/image/ab6761610000e5eb9d3f9efc8e0030306e583cef
-10,Justin Bieber,10,https://i.scdn.co/image/ab6761610000e5eb8ae7f2aaa9817a704a87ea36
-11,Lana Del Rey,11,https://i.scdn.co/image/ab6761610000e5ebb99cacf8acd5378206767261
-12,Taylor Swift,12,https://i.scdn.co/image/ab6761610000e5eb5a00969a4698c3132a15fbb0
-13,LANY,13,https://i.scdn.co/image/ab6761610000e5eb046b6fbb00503d1bb72ac7ae
-14,Chillies,14,https://i.scdn.co/image/ab6761610000e5eb44ce044fe6a381a3e49f2be9
-15,Ngọt,15,https://i.scdn.co/image/ab6761610000e5eb66e0a040a53996e8bf19f9b5
-16,Dua Lipa,16,https://i.scdn.co/image/ab6761610000e5ebd42a27db3286b58553da8858
-17,Jay Chou,17,https://i.scdn.co/image/ab6761610000e5eb02b3aa55ba238b2ceafb09da
-18,HONNE,18,https://i.scdn.co/image/ab6761610000e5ebe1b208b540b1419be505c696
-19,Hozier,19,https://i.scdn.co/image/ab6761610000e5eb9ba4d95b74bacff4d5747f61
-20,Post Malone,20,https://i.scdn.co/image/ab6761610000e5ebb894ef9fa437b0389c5567cc
-21,Nujabes,21,https://i.scdn.co/image/ab6761610000e5eb2dd5a47714902a1db1810456
-22,Sơn Tùng M-TP,22,https://i.scdn.co/image/ab6761610000e5eb1036554ddc5f791a4f5dcfc3
-23,AnnenMayKantereit,23,https://i.scdn.co/image/ab6761610000e5ebbcf79c131f4ddb3635dd60bb
-24,Khalid,24,https://i.scdn.co/image/ab6761610000e5eb31072db9da0311ecfabe96bf
-25,Epik High,25,https://i.scdn.co/image/ab6761610000e5eb7ab6a76808b6f77f5628d231
-26,Giveon,26,https://i.scdn.co/image/ab6761610000e5eb0219b6643b1ec449b0951bfe
-27,Lady Gaga,27,https://i.scdn.co/image/ab6761610000e5ebc8d3d98a1bccbe71393dbfbf
-28,Bùi Lan Hương,28,https://i.scdn.co/image/ab67616d0000b2736886d40a51ad2c4bcc3c6bcb
-29,Westlife,29,https://i.scdn.co/image/ab6761610000e5ebceead049d538f0b5087041dd
-30,Nguyen Ha,30,https://i.scdn.co/image/ab6761610000e5eb0c0fee6b68089c0498d507e2
-31,Cigarettes After Sex,31,https://i.scdn.co/image/ab6761610000e5ebfe9c808643258ecd6770aa7d
-32,dhruv,32,https://i.scdn.co/image/ab6761610000e5eb9d9fb46b69bfb485f8872d02
+id,artist_name,avartar
+1,Ariana Grande,player/image/Ariana Grande.png
+2,Adele,player/image/Adele.png
+3,BIGBANG,player/image/BIGBANG.png
+4,BLACKPINK,player/image/BLACKPINK.png
+5,Đen,player/image/Đen.png
+6,Bruno Mars,player/image/Bruno Mars.png
+7,Sam Smith,player/image/Sam Smith.png
+8,Imagine Dragons,player/image/Imagine Dragons.png
+9,Justin Timberlake,player/image/Justin Timberlake.png
+10,Justin Bieber,player/image/Justin Bieber.png
+11,Lana Del Rey,player/image/Lana Del Rey.png
+12,Taylor Swift,player/image/Taylor Swift.png
+13,LANY,player/image/LANY.png
+14,Chillies,player/image/Chillies.png
+15,Ngọt,player/image/Ngọt.png
+16,Dua Lipa,player/image/Dua Lipa.png
+17,Jay Chou,player/image/Jay Chou.png
+18,HONNE,player/image/HONNE.png
+19,Hozier,player/image/Hozier.png
+20,Post Malone,player/image/Post Malone.png
+21,Nujabes,player/image/Nujabes.png
+22,Sơn Tùng M-TP,player/image/Son Tùng M-TP.png
+23,AnnenMayKantereit,player/image/AnnenMayKantereit.png
+24,Khalid,player/image/Khalid.png
+25,Epik High,player/image/Epik High.png
+26,Giveon,player/image/Giveon.png
+27,Lady Gaga,player/image/Lady Gaga.png
+28,Bùi Lan Huong,player/image/Bùi Lan Huong.png
+29,Westlife,player/image/Westlife.png
+30,Nguyen Ha,player/image/Nguyen Ha.png
+31,Cigarettes After Sex,player/image/Cigarettes After Sex.png
+32,dhruv,player/image/dhruv.png
+33,5 Seconds of Summer,player/image/5sos.jpg
+34,Arctic Monkeys,player/image/Arctic_Monkeys.png
