@@ -26,7 +26,7 @@ class Album(models.Model):
 class Song(models.Model):
     song_name = models.CharField(max_length=264, blank=False)
     audio = models.ImageField(upload_to='player/audio', default='player/audio/dummy-audio.mp3')
-    artists = models.ManyToManyField(Artist)
+    artists = models.ForeignKey(Artist, on_delete=models.PROTECT, default='')
     album = models.ForeignKey(Album, on_delete=models.PROTECT)
 
     def __str__(self):
