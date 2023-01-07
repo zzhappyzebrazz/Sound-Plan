@@ -24,9 +24,23 @@ def paginator(request, all_items, num_of_items_per_page):
 def index(request):
     all_artist = Artist.objects.order_by('artist_name')
     new_album = Album.objects.order_by('-public_day')[:12]
+    popular_artist = Artist.objects.order_by('-id')[:7]
+    week_top = Album.objects.order_by('public_day')[:5]
+    new_hits = []
+    new_hits.append(Song.objects.get(id=4))
+    new_hits.append(Song.objects.get(id=40))
+    new_hits.append(Song.objects.get(id=77))
+    new_hits.append(Song.objects.get(id=108))
+    new_hits.append(Song.objects.get(id=120))
+    new_hits.append(Song.objects.get(id=326))
+    new_hits.append(Song.objects.get(id=392))
+    print(popular_artist)
     return render(request, 'player/index.html', {
         'all_artist' : all_artist,
         'new_album' : new_album,
+        'popular_artist' : popular_artist,
+        'week_top' : week_top,
+        'new_hits' : new_hits,
     })
 
 def albums_store(request):
