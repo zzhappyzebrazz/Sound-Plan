@@ -108,3 +108,22 @@ def contact(request):
 def event(request):
     return render(request, 'player/event.html')
 
+def single_album(request, id):
+    album = Album.objects.get(id=id)
+    songs = Song.objects.filter(album_id=album.id)
+    print(str(album.public_day))
+    print("==================")
+    print(songs)
+    print("==================")
+    return render(request, 'player/single-album.html', {
+        'album' : album,
+        'songs' : songs,
+    })
+
+def artist(request, id):
+    artist = Artist.objects.get(id=id)
+    albums = Album.objects.filter(artists_id=id)
+    return render (request, 'player/artist.html', {
+        'artist' : artist,
+        'albums' : albums,
+    })

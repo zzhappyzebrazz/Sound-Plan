@@ -11,5 +11,7 @@ urlpatterns = [
     path('news', news, name="news"),
     path('contact', contact, name="contact"),
     path('event', event, name="event"),
+    path('single-album/<int:id>', single_album, name="single-album"),
+    path('artist/<int:id>', artist, name="artist"),
 
 ]

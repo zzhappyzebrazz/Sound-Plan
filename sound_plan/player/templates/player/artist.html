@@ -1,0 +1,65 @@
+{% extends 'player/_Master.html' %}
+{% load static %}
+{% block main_content %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({{ artist.avartar.url }});">
+        <div class="bradcumbContent">
+            <h2>{{ artist }}</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <div class="oneMusic-buy-now-area mb-100">
+        <div class="container">
+            <div class="row">
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center">
+                        {% comment %} <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Buy Now Area End ##### -->
+
+    <!-- ##### Miscellaneous Area Start ##### -->
+    <section class="miscellaneous-area section-padding-100-0">
+        <div class="container">
+            <div class="row">
+                <!-- ***** Popular Artists ***** -->
+                <div class="col-12 col-lg-12">
+                    <div class="weeks-top-area mb-100">
+                        <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
+                            <p>See What's New</p>
+                            <h2>Albums</h2>
+                        </div>
+
+                        {% for album in albums %}
+                        <!-- Single Top Item -->
+                        <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="100ms">
+                            <div class="thumbnail">
+                                <img src="{{ album.album_cover.url }}" alt="{{ album }}">
+                            </div>
+                            <div class="content-">
+                                <a href="{% url 'player:single-album' album.id %}">
+                                    <h6>{{ album }}</h6>
+                                    <p>{{ album.artists }}</p>
+                                    <p>#{{ album.public_day }}</p>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Miscellaneous Area End ##### -->
+
+{% endblock %}

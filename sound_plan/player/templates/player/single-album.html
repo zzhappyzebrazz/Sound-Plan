@@ -1,0 +1,61 @@
+{% extends 'player/_Master.html' %}
+{% load static %}
+{% block main_content %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/blog2.jpg' %});">
+        <div class="bradcumbContent">
+            <p>{{ album.artists }}</p>
+            <h2>{{ album }}</h2>
+            <p>{{ album.public_day }}</p>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <div class="oneMusic-buy-now-area mb-100">
+        <div class="container">
+            <div class="row">
+
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="load-more-btn text-center">
+                        {% comment %} <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Buy Now Area End ##### -->
+
+    <!-- ##### Song Area Start ##### -->
+    <div class="one-music-songs-area mb-70">
+        <div class="container">
+            <div class="row">
+
+                {% for song in songs %}
+                <!-- Single Song Area -->
+                <div class="col-12">
+                    <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                        <div class="song-thumbnail">
+                            <img src="{{ song.album.album_cover.url }}" alt="{{ song }}">
+                        </div>
+                        <div class="song-play-area">
+                            <div class="song-name">
+                                <p>{{forloop.counter}}. {{ song }}</p>
+                            </div>
+                            <audio preload="auto" controls>
+                                <source src="{{ song.audio.url }}">
+                            </audio>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <!-- ##### Song Area End ##### -->
+
+{% endblock %}

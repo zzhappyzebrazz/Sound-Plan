@@ -15,8 +15,8 @@
                         <div class="col-12">
                             <div class="hero-slides-content text-center">
                                 <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
-                                <h2 data-animation="fadeInUp" data-delay="300ms">Imagine Dragons<span>Imagine Dragons</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                                <h2 data-animation="fadeInUp" data-delay="300ms">The Neighbourhood<span>The Neighbourhood</span></h2>
+                                <a data-animation="fadeInUp" data-delay="500ms" href="{% url 'player:single-album' 35 %}" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                             <div class="hero-slides-content text-center">
                                 <h6 data-animation="fadeInUp" data-delay="100ms">Latest album</h6>
                                 <h2 data-animation="fadeInUp" data-delay="300ms">Arctic Monkeys<span>Arctic Monkeys</span></h2>
-                                <a data-animation="fadeInUp" data-delay="500ms" href="#" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
+                                <a data-animation="fadeInUp" data-delay="500ms" href="{% url 'player:single-album' 34 %}" class="btn oneMusic-btn mt-50">Discover <i class="fa fa-angle-double-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="section-heading style-2">
-                        <p>See what’s new</p>
+                        <p>See Your Favorite Artists</p>
                         <h2>Latest Albums</h2>
                     </div>
                 </div>
@@ -62,9 +62,9 @@
                         {% for artist in all_artist %}
                         <!-- Single Album -->
                         <div class="single-album">
-                            <img src="{{ artist.avartar.url }}" alt="">
+                            <img href="{% url 'player:artist' artist.id %}" src="{{ artist.avartar.url }}" alt="artist">
                             <div class="album-info">
-                                <a href="#">
+                                <a href="{% url 'player:artist' artist.id %}">
                                     <h5>{{ artist }}</h5>
                                 </a>
                                 {% comment %} <p>Second Song</p> {% endcomment %}
@@ -98,18 +98,20 @@
                 <div class="col-12 col-sm-6 col-md-4 col-lg-2">
                     <div class="single-album-area wow fadeInUp" data-wow-delay="100ms">
                         <div class="album-thumb">
-                            <img src="{{ album.album_cover.url }}" alt="{{ album }}">
+                            <a href="{% url 'player:single-album' album.id %}">
+                                <img src="{{ album.album_cover.url }}" alt="{{ album }}">
+                            </a>
                             <!-- Album Price -->
                             <div class="album-price">
                                 <p>$free</p>
                             </div>
                             <!-- Play Icon -->
-                            <div class="play-icon">
-                                <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
-                            </div>
+                            {% comment %} <div class="play-icon">
+                                <a href="{% url 'player:single-album' album.id %}" class="video--play--btn"><span class="icon-play-button"></span></a>
+                            </div> {% endcomment %}
                         </div>
                         <div class="album-info">
-                            <a href="#">
+                            <a href="{% url 'player:single-album' album.id %}">
                                 <h5>{{ album.artists }}</h5>
                             </a>
                             <p>{{ album.album_name }}</p>
@@ -123,7 +125,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                        <a href="{% url 'player:albums-store' %}" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -145,7 +147,9 @@
                         <!-- Section Heading -->
                         <div class="section-heading white text-left mb-30">
                             <p>Fetured Artits</p>
-                            <h2>Arctic Monkeys</h2>
+                            <a href="{% url 'player:artist' 34 %}">
+                                <h2>Arctic Monkeys</h2>
+                            </a>
                         </div>
                         <p>Arctic Monkeys are an English rock band formed in Sheffield in 2002. 
                             The group consists of Alex Turner (lead vocals, guitar, keyboards), Jamie Cook (guitar, keyboards), Nick O'Malley (bass guitar, backing vocals), and Matt Helders (drums, backing vocals). 
@@ -175,18 +179,22 @@
                     <div class="weeks-top-area mb-100">
                         <div class="section-heading text-left mb-50 wow fadeInUp" data-wow-delay="50ms">
                             <p>Albums of the Week</p>
-                            <h2>Top 5 Album</h2>
+                            <h2>Top 5 Albums</h2>
                         </div>
 
                         {% for album in week_top %}
                         <!-- Single Top Item -->
                         <div class="single-top-item d-flex wow fadeInUp" data-wow-delay="100ms">
                             <div class="thumbnail">
-                                <img src="{{ album.album_cover.url }}" alt="">
+                                <a href="{% url 'player:single-album' album.id %}">
+                                    <img src="{{ album.album_cover.url }}" alt="{{ album }}">
+                                </a>
                             </div>
                             <div class="content-">
-                                <h6>{{ album.artist }}</h6>
-                                <p>{{ album }}</p>
+                                <a href="{% url 'player:single-album' album.id %}">
+                                    <h6>{{ album.artists }}</h6>
+                                    <p>{{ album }}</p>
+                                </a>
                             </div>
                         </div>
                         {% endfor %}
@@ -233,10 +241,14 @@
                         <!-- Single Artist -->
                         <div class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="100ms">
                             <div class="thumbnail">
-                                <img src="{{ artist.avartar.url }}" alt="">
+                                <a href="{% url 'player:artist' artist.id %}">
+                                    <img src="{{ artist.avartar.url }}" alt="{{ artist }}">
+                                </a>
                             </div>
                             <div class="content-">
-                                <p>{{ artist }}</p>
+                                <a href="{% url 'player:artist' artist.id %}">
+                                    <p>{{ artist }}</p>
+                                </a>
                             </div>
                         </div>
                         {% endfor %}

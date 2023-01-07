@@ -15,7 +15,7 @@ class Album(models.Model):
     album_name = models.CharField(max_length=264, blank=False)
     artists = models.ForeignKey(Artist, on_delete=models.PROTECT, default='')
     album_cover = models.ImageField(upload_to='player/images', default='player/image/default.png')
-    public_day = models.DateTimeField(default=timezone.now)
+    public_day = models.CharField(max_length=264, blank=True)
     
     def __str__(self):
         return self.album_name
