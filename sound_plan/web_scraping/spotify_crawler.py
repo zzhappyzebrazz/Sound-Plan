@@ -53,6 +53,8 @@ from bs4 import BeautifulSoup
 import requests
 import re
 import csv
+import os
+from pathlib import Path
 
 SPOTIFY_URL = 'https://open.spotify.com'
 
@@ -173,6 +175,9 @@ def csv_saver(result):
         
     return
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+CRWAL_DIR = os.path.join(BASE_DIR, 'web_scraping\\')
+IMAGE_DIR = os.path.join(BASE_DIR, 'media\\player\\image\\')
 def main():
     artist_list = [
         'https://open.spotify.com/artist/66CXWjxzNUsdJxJ2JdwvnR', #Ariana Grande
@@ -209,17 +214,51 @@ def main():
         'https://open.spotify.com/artist/70NcAr4ZtA3FAqU16iQZSb', #dhruv
     ]
     result = []
-    for i in artist_list:
-        print(i)
-        result.append(bs4_parser(i))
-    # result.append(bs4_parser(artist_list[0]))
-    csv_saver(result)
-    # url = 'https://i.scdn.co/image/ab67616d00001e02c6b577e4c4a6d326354a89f7'
-    # url = '{}'.format(url)           
-    # with open("image.png", 'wb') as f:
-    #     response = requests.get(url)
-    #     f.write(response.content)
-    # return
+    # for i in artist_list:
+    #     print(i)
+    #     result.append(bs4_parser(i))
+    # # result.append(bs4_parser(artist_list[0]))
+    # csv_saver(result)
+    
+    # print(BASE_DIR)
+    # print(CRWAL_DIR)
+    # print(IMAGE_DIR)
+    artist_name = []
+    artist_url = []
+    album_name = []
+    album_url = []
+    artist_link = 'player_aritist_link.csv'
+    artist_link_dir = os.path.join(CRWAL_DIR, artist_link)
+    album_link = 'player_album_link.csv'
+    album_link_dir = os.path.join(CRWAL_DIR, album_link)
+    print(os.path.exists(artist_link_dir))
+    print(os.path.exists(album_link_dir))
+    
+    with open(artist_link_dir, 'r', encoding='cp1258') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            artist_name.append(row[1])
+            artist_url.append(row[3])
+            
+    with open(album_link_dir, 'r', encoding='cp1258') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            # print(row)
+            album_name.append(row[1])
+            album_url.append(row[2])
+            
+    # print(album_name, album_url, artist_name, artist_url)
+    os.chdir(IMAGE_DIR)
+    print(os.getcwd())
 
+    for i in range(len(album_name)):
+        url = album_url[i]
+        name = album_name[i] + '.png'
+        with open(name, 'wb') as file:
+            if 'https' in url:
+                url = '{}'.format(url)           
+                response = requests.get(url)
+                file.write(response.content)
+        
 if __name__ == "__main__":
     main()
