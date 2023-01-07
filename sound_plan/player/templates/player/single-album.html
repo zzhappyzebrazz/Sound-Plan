@@ -5,9 +5,11 @@
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/blog2.jpg' %});">
         <div class="bradcumbContent">
-            <p>{{ album.artists }}</p>
-            <h2>{{ album }}</h2>
-            <p>{{ album.public_day }}</p>
+                <a href="{% url 'player:artist' album.artists.id %}">
+                <p>{{ album.artists }}</p>
+                <h2>{{ album }}</h2>
+                <p>{{ album.public_day }}</p>
+            </a>
         </div>
     </section>
     <!-- ##### Breadcumb Area End ##### -->

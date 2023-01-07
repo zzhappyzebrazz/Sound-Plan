@@ -138,9 +138,9 @@
         <div class="container">
             <div class="row align-items-end">
                 <div class="col-12 col-md-5 col-lg-4">
-                    <div class="featured-artist-thumb">
-                        <img src="img/bg-img/fa.jpg" alt="">
-                    </div>
+                    {% comment %} <div class="featured-artist-thumb">
+                        <img src="{% static 'player/img/bg-img/fa.jpg' %}" alt="">
+                    </div> {% endcomment %}
                 </div>
                 <div class="col-12 col-md-7 col-lg-8">
                     <div class="featured-artist-content">
@@ -217,8 +217,12 @@
                                     <img src="{{ hit.album.album_cover.url }}" alt="{{ hit.album }}">
                                 </div>
                                 <div class="content-">
-                                    <h6>{{ hit.artists }}</h6>
-                                    <p>{{ hit.album }}</p>
+                                    <a href="{% url 'player:artist' hit.artists.id %}">
+                                        <h6>{{ hit.artists }}</h6>
+                                    </a>
+                                    <a href="{% url 'player:artist' hit.album.id %}">
+                                        <p>{{ hit.album }}</p>
+                                    </a>
                                 </div>
                             </div>
                             <audio preload="auto" controls>
