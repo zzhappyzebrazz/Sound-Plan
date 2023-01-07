@@ -22,7 +22,12 @@ def paginator(request, all_items, num_of_items_per_page):
 
 # Create your views here.
 def index(request):
-    return render(request, 'player/index.html')
+    all_artist = Artist.objects.order_by('artist_name')
+    new_album = Album.objects.order_by('-public_day')[:12]
+    return render(request, 'player/index.html', {
+        'all_artist' : all_artist,
+        'new_album' : new_album,
+    })
 
 def albums_store(request):
     return render(request, 'player/albums-store.html')
