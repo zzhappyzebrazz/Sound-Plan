@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from ckeditor_uploader.fields import RichTextUploadingField
+from ckeditor.fields import RichTextField
+
 # Create your models here.
     
 class Artist(models.Model):
@@ -16,6 +18,7 @@ class Album(models.Model):
     artists = models.ForeignKey(Artist, on_delete=models.PROTECT, default='')
     album_cover = models.ImageField(upload_to='player/images', default='player/image/default.png')
     public_day = models.CharField(max_length=264, blank=True)
+    public_day = models.DateField(default=timezone.now)
     
     def __str__(self):
         return self.album_name
@@ -37,9 +40,9 @@ class Event(models.Model):
     address = models.CharField(max_length=500, blank=False)
     content = RichTextUploadingField(blank=True, null=True)
     image = models.ImageField(upload_to='player/images', default='player/image/default.png')
-    date = models.DateField()
+    date = models.DateField(default=timezone.now)
     price = models.IntegerField()
-    artists = models.ManyToManyField(Artist)
+    artists = models.ForeignKey(Artist, on_delete=models.PROTECT, default=0)
     
     def __str__(self):
         return self.name

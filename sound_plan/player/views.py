@@ -24,6 +24,8 @@ def paginator(request, all_items, num_of_items_per_page):
 def index(request):
     all_artist = Artist.objects.order_by('artist_name')
     new_album = Album.objects.order_by('-public_day')[:12]
+    for album in new_album:
+        print(album.public_day)
     popular_artist = Artist.objects.order_by('-id')[:7]
     week_top = Album.objects.order_by('public_day')[:5]
     new_hits = []
@@ -43,8 +45,26 @@ def index(request):
         'new_hits' : new_hits,
     })
 
-def albums_store(request):
-    return render(request, 'player/albums-store.html')
+def albums_store(request, keyword):
+    all_albums = []
+    if keyword == 'All':
+        all_albums = Album.objects.order_by('-public_day')
+    elif keyword == 'Number':
+        number = [str(i) for i in range(0,10)]
+        for num in number:
+            album = Album.objects.filter(album_name__startswith=num)
+            if len(album) > 0:
+                for temp in album:
+                    all_albums.append(temp)
+    else:
+        all_albums = Album.objects.filter(album_name__startswith=keyword)
+        
+    num_album_per_page = 8
+    albums = paginator(request, all_albums, num_album_per_page)
+    print(all_albums)
+    return render(request, 'player/albums-store.html', {
+        'albums' : albums,
+    })
 
 def news(request):
     rss_link = 'https://pitchfork.com/feed/feed-news/rss'
@@ -106,7 +126,12 @@ def contact(request):
     })
 
 def event(request):
-    return render(request, 'player/event.html')
+    events = Event.objects.order_by('-date')
+    for event in events:
+        print(event.artists)
+    return render(request, 'player/event.html', {
+        'events' : events,
+    })
 
 def single_album(request, id):
     album = Album.objects.get(id=id)

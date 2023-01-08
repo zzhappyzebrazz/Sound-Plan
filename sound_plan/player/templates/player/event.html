@@ -5,7 +5,7 @@
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/a7.jpg' %});">
         <div class="bradcumbContent">
-            <p>See what’s new</p>
+            <p>See yout favorite artists live</p>
             <h2>Events</h2>
         </div>
     </section>
@@ -13,168 +13,43 @@
 
     <!-- ##### Events Area Start ##### -->
     <section class="events-area section-padding-100">
-        <div class="container">
-            <div class="row">
+        <div class="col-12 col-lg-12">
+            <div class="container">
+                <div class="row">
 
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e1.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Dj Night Party</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">VIP Sala</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
+                    {% for event in events %}
+                    <!-- Single Post Start -->
+                    <div class="single-blog-post mb-100 wow fadeInUp" data-wow-delay="100ms">
+                        <!-- Post Thumb -->
+                        <div class="blog-post-thumb mt-100">
+                            <a href="#"><img src="{{ event.image.url }}" width="1200" height="1000" alt="{{ event }}"></a>
+                            <!-- Post Date -->
+                            <div class="post-date">
+                                <span>{{ event.date.day }}</span>
+                                <span>{{ event.date|slice:"16" }}</span>
                             </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
+                        </div>
+
+                        <!-- Blog Content -->
+                        <div class="blog-content">
+                            <!-- Post Title -->
+                            <p>{{ event.artist}}</p>
+                            <a href="#" class="post-title">{{ event.name }}</a>
+                            <!-- Post Excerpt -->
+                            <p>{{ event.content|safe }}</p>
+                            <a>Ticket price: {{ event.price }}$</a>
                         </div>
                     </div>
+                    {% endfor %}
+
+
                 </div>
 
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e2.jpg" alt="">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="load-more-btn text-center mt-70">
+                            <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                         </div>
-                        <div class="event-text">
-                            <h4>The Mission</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Gold Arena</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e3.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Planet ibiza</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Space Ibiza</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e4.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Dj Night Party</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">VIP Sala</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e5.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>The Mission</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Gold Arena</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e6.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Planet ibiza</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Space Ibiza</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e7.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Dj Night Party</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">VIP Sala</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e8.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>The Mission</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Gold Arena</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Event Area -->
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="single-event-area mb-30">
-                        <div class="event-thumbnail">
-                            <img src="img/bg-img/e9.jpg" alt="">
-                        </div>
-                        <div class="event-text">
-                            <h4>Planet ibiza</h4>
-                            <div class="event-meta-data">
-                                <a href="#" class="event-place">Space Ibiza</a>
-                                <a href="#" class="event-date">June 15, 2018</a>
-                            </div>
-                            <a href="#" class="btn see-more-btn">See Event</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="load-more-btn text-center mt-70">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -207,31 +82,45 @@
                 <div class="col-12 col-lg-6">
                     <div class="testimonials-area mb-100 bg-img bg-overlay" style="background-image: url(img/bg-img/bg-3.jpg);">
                         <div class="section-heading white text-left mb-50">
-                            <p>See what’s new</p>
-                            <h2>Testimonial</h2>
+                            <p>See what’s critics said/p>
+                            <h2>Album Reviews</h2>
                         </div>
                         <!-- Testimonial Slide -->
                         <div class="testimonials-slide owl-carousel">
                             <!-- Single Slide -->
                             <div class="single-slide">
-                                <p>Nam tristique ex vel magna tincidunt, ut porta nisl finibus. Vivamus eu dolor eu quam varius rutrum. Fusce nec justo id sem aliquam fringilla nec non lacus. Suspendisse eget lobortis nisi, ac cursus odio. Vivamus nibh velit, rutrum.</p>
+                                <p>Born Pink - BLACKPINK (2022)</p>
+                                <p>Born Pink, their highly anticipated follow-up, is a compact collection that leans into the image of authority BLACKPINK have fostered in the six years since their debut. Its eight songs juxtapose hard-hitting hip-hop—a staple of agency YG Entertainment’s sound—with a smattering of pop, disco, and balladry. Through sound and imagery, the group’s hard and soft sides mingle, but it’s unclear which element of BLACKPINK’s name Born Pink wants to focus on. What is apparent is an unfortunate disinterest in the growth and advancement K-pop has made in the last few years.</p>
                                 <div class="testimonial-info d-flex align-items-center">
                                     <div class="testimonial-thumb">
-                                        <img src="img/bg-img/t1.jpg" alt="">
+                                        <img src="{% static 'player/img/bg-img/Review 1.png' %}" alt="">
                                     </div>
-                                    <p>William Smith, Customer</p>
+                                    <p>By Alex Ramos</p>
                                 </div>
                             </div>
                             <!-- Single Slide -->
                             <div class="single-slide">
-                                <p>Nam tristique ex vel magna tincidunt, ut porta nisl finibus. Vivamus eu dolor eu quam varius rutrum. Fusce nec justo id sem aliquam fringilla nec non lacus. Suspendisse eget lobortis nisi, ac cursus odio. Vivamus nibh velit, rutrum.</p>
+                                <p>An Evening With Silk Sonic - Bruno Mars / Anderson .Paak / Silk Sonic (2021)</p>
+                                <p>After one listen, my scorecard noted the crystalline guitar glissando best associated with Motown session musician Melvin “Wah Wah Watson” Ragin (see: Marvin Gaye’s “I Want You” or Ragin’s own “Goo Goo Wah Wah”), the siren-like ARP synth from Kool and the Gang’s “Summer Madness,” a whiff of the chorus from the Ohio Players’ “Fire,” and the title of Rick James and Teena Marie’s magisterial “Fire and Desire” (released in 1981, but close enough). Other critics will surely pin down allusions of their own. For a certain listener, this is half the fun: An Evening With Silk Sonic is an opportunity to prove your adoration and knowledge. For some younger listeners, this may be their first full-length engagement with one of the richest chapters in music history. Others will process this as simply a good time. But any significant level of investment poses the question: When artists invoke music as beloved as Motown and Philly soul, how can anything they create measure up?</p>
                                 <div class="testimonial-info d-flex align-items-center">
                                     <div class="testimonial-thumb">
-                                        <img src="img/bg-img/t1.jpg" alt="">
+                                        <img src="{% static 'player/img/bg-img/Review 2.png' %}" alt="">
                                     </div>
-                                    <p>Nazrul Islam, Developer</p>
+                                    <p>By Ross Scarano</p>
                                 </div>
                             </div>
+                                <!-- Single Slide -->
+                            <div class="single-slide">
+                                <p>30 - Adele (2021)</p>
+                                <p>Here, she’s telling a more unexpected story about love: What it means to inflict that pain on your family, to rebuild yourself from scratch, and—big exhale—to try to love again. The task necessitated a more nuanced writing style and looser structures to some of the songs, resulting in Adele’s most ambitious album to date. The way the 33-year-old interacts with storied traditions feels more in sync with contemporary pop, R&B, and hip-hop, as though she’s taking cues from newer visionaries like Jazmine Sullivan and Frank Ocean as much as her diva elders. She worked with producer Inflo, of London collective SAULT and Little Simz acclaim, on three songs that bring a real warmth and soulfulness to the record’s final third. And her vocals are more playful: Motown-style background vox are modulated to a chirp on “Cry Your Heart Out” and “Love Is a Game,” in a kind of remix of her usual retro homage.</p>
+                                <div class="testimonial-info d-flex align-items-center">
+                                    <div class="testimonial-thumb">
+                                        <img src="{% static 'player/img/bg-img/Review 3.png' %}" alt="">
+                                    </div>
+                                    <p>By Jill Mapes</p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>

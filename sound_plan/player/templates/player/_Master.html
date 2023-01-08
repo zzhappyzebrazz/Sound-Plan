@@ -60,7 +60,7 @@
                             <div class="classynav">
                                 <ul>
                                     <li><a href="{% url 'player:index' %}">Home</a></li>
-                                    <li><a href="{% url 'player:albums-store' %}">Albums</a></li>
+                                    <li><a href="{% url 'player:albums-store' 'All'%}">Albums</a></li>
                                     <li><a href="{% url 'player:event' %}">Events</a></li>
                                     <li><a href="{% url 'player:news' %}">News</a></li>
                                     <li><a href="{% url 'player:contact' %}">Contact</a></li>
@@ -119,7 +119,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     <div class="footer-nav">
                         <ul>
                             <li><a href="{% url 'player:index' %}">Home</a></li>
-                            <li><a href="{% url 'player:albums-store' %}">Albums</a></li>
+                            <li><a href="{% url 'player:albums-store' 'All'%}">Albums</a></li>
                             <li><a href="{% url 'player:event' %}">Events</a></li>
                             <li><a href="{% url 'player:news' %}">News</a></li>
                             <li><a href="{% url 'player:contact' %}">Contact</a></li>
