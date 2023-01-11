@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'player',
     'listener',
+    'cart',
     'ckeditor',
     'ckeditor_uploader',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -145,4 +147,13 @@ CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': 'full',
     },
+}
+
+# Cart 
+CART_SESSION_ID = 'cart'
+
+#REST API by Django rest_framework
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE' : 50,
 }

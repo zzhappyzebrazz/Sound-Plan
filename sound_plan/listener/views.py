@@ -253,3 +253,5 @@ def logout(request):
         print(request.session)
         print("=========================")
     return redirect('player:index')
+
+

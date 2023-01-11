@@ -6,6 +6,9 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 import feedparser
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
+from django.http import JsonResponse
+from rest_framework import viewsets, permissions
+from player.serializers import SongSerializers, AlbumSerializers, ArtistSerializers
 
 def paginator(request, all_items, num_of_items_per_page):
     page = request.GET.get('page', 1) # First page
@@ -152,3 +155,22 @@ def artist(request, id):
         'artist' : artist,
         'albums' : albums,
     })
+    
+# Web service từ rest_framework
+class SongViewSet(viewsets.ModelViewSet):
+    queryset = Song.objects.order_by('song_name')
+    serializer_class = SongSerializers
+    # permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
+class AlbumViewSet(viewsets.ModelViewSet):
+    queryset = Album.objects.order_by('-public_day')
+    serializer_class = AlbumSerializers
+    # permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
+class ArtistViewSet(viewsets.ModelViewSet):
+    queryset = Artist.objects.order_by('artist_name')
+    serializer_class = ArtistSerializers
+    # permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

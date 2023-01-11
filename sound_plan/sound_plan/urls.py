@@ -17,12 +17,22 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework import routers
+from player.views import SongViewSet, AlbumViewSet, ArtistViewSet
+
+router = routers.DefaultRouter()
+router.register('songs', SongViewSet)
+router.register('album', AlbumViewSet)
+router.register('artists', ArtistViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('player.urls')),
     path('',include('listener.urls')),
+    path('',include('cart.urls')),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('api/', include(router.urls)),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -62,7 +62,9 @@
                         {% for artist in all_artist %}
                         <!-- Single Album -->
                         <div class="single-album">
-                            <img href="{% url 'player:artist' artist.id %}" src="{{ artist.avartar.url }}" alt="artist">
+                            <a href="{% url 'player:artist' artist.id %}">
+                                <img href="{% url 'player:artist' artist.id %}" src="{{ artist.avartar.url }}" alt="artist">
+                            </a>
                             <div class="album-info">
                                 <a href="{% url 'player:artist' artist.id %}">
                                     <h5>{{ artist }}</h5>
