@@ -49,6 +49,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-6">
                     <div class="login-content">
                         <h3>Change Your Password</h3>
@@ -75,6 +76,43 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-lg-6">
+                    <div class="login-content">
+                        <h3>Your Order History</h3>
+                        <div class="login-form">
+                            <form method="post">
+                                <div class="col-md-12">
+                                    {{ result_update_info|safe }}
+                                </div>
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    {{ info_forms.first_name.label }}
+                                    {{ info_forms.first_name }}
+                                </div>
+                                <div class="form-group">
+                                    {{ info_forms.last_name.label }}
+                                    {{ info_forms.last_name }}
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="text" placeholder="Email"
+                                        value="{{ request.session.s_user.email }}" disabled>
+                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
+                                </div>
+                                <div class="form-group">
+                                    {{ info_forms.phone.label }}
+                                    {{ info_forms.phone }}
+                                </div>
+                                <div class="form-group">
+                                    {{ info_forms.address.label }}
+                                    {{ info_forms.address }}
+                                </div>
+                                <button type="submit" class="btn oneMusic-btn mt-30" name="btnUpdate">Update</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>

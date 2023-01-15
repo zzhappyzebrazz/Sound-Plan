@@ -1,0 +1,34 @@
+{% extends 'player/_Master.html' %}
+{% load static %}
+{% block main_content %}
+
+<!-- ##### Breadcumb Area Start ##### -->
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/blog1.jpg' %});">
+    <div class="bradcumbContent">
+        <p></p>
+        <h2>Check-Out</h2>
+    </div>
+</section>
+<!-- ##### Breadcumb Area End ##### -->
+
+ <!-- ##### Blog Area Start ##### -->
+ <div class="blog-area section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-12 text-center">
+                <h2> Your Order has beed successful Checked-Out!!</h2>
+                <h3> See you at the Event!!</h3>
+                <a>
+                    <img src="{% static 'player/img/QR code.png' %}" alt="Check-out">
+                </a>
+                <br>
+                <a> Show this QR to Enter the Event </a>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ##### Blog Area End ##### -->
+
+{% endblock %}

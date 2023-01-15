@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'player',
     'listener',
     'cart',
+    'dashboard',
     'ckeditor',
     'ckeditor_uploader',
     'rest_framework',

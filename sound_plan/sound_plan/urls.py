@@ -30,6 +30,7 @@ urlpatterns = [
     path('',include('player.urls')),
     path('',include('listener.urls')),
     path('',include('cart.urls')),
+    path('',include('dashboard.urls')),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),

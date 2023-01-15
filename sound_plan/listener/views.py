@@ -5,6 +5,7 @@ from listener.models import Listener
 from sound_plan.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
+from cart.models import Order, OrderItem
 
 hasher = PBKDF2PasswordHasher()
 
@@ -140,7 +141,6 @@ def register(request):
 def my_account(request):
     #TO-DO:
 
-
     # Change password
     if 's_user' not in request.session:
         print('User unregisterd')
@@ -239,12 +239,28 @@ def my_account(request):
                         Plase Fill out the Form!!!
                     </div>
                 '''
+                
+    #Show user order history
+    order_history = Order.objects.filter(listener_id=user['id']).order_by('-created')
+    for order in order_history:
+        print(order.total)
+        print(order.created)
+        order_items = OrderItem.objects.filter(order_id=order.id)
+        for item in order_items:
+            print(item.price)
+            print(item.quantity)
+    
+    #Show user Play list
+    
+    
+    
     return render(request, 'player/my-account.html', {
         'user' : user,
         'info_forms' : info_forms,
         'password_forms' : password_forms,
         'result_update_info' : result_update_info,
         'result_change_password' : result_change_password,
+        'order_history' : order_history,
     })
 
 def logout(request):
