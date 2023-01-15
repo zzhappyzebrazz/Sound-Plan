@@ -1,120 +1,180 @@
 {% extends 'player/_Master.html' %}
 {% load static %}
 {% block main_content %}
+{% load mathfilters %}
+<!-- ##### Breadcumb Area Start ##### -->
+<div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/breadcumb2.jpg' %});">
+    <div class="bradcumbContent">
+        <p>Welcome to your space!</p>
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+    </div>
+</div>
+<!-- ##### Breadcumb Area End ##### -->
 
-    <!-- ##### Breadcumb Area Start ##### -->
-    <div class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/breadcumb2.jpg' %});">
-        <div class="bradcumbContent">
-            <p>Welcome to your space!</p>
-            <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+<!-- ##### User Infomation Start ##### -->
+<section class="login-area section-padding-100">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-6">
+                <div class="login-content">
+                    <h3>Your Infomation</h3>
+                    <div class="login-form">
+                        <form method="post">
+                            <div class="col-md-12">
+                                {{ result_update_info|safe }}
+                            </div>
+                            {% csrf_token %}
+                            <div class="form-group">
+                                {{ info_forms.first_name.label }}
+                                {{ info_forms.first_name }}
+                            </div>
+                            <div class="form-group">
+                                {{ info_forms.last_name.label }}
+                                {{ info_forms.last_name }}
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" type="text" placeholder="Email"
+                                    value="{{ request.session.s_user.email }}" disabled>
+                                <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
+                            </div>
+                            <div class="form-group">
+                                {{ info_forms.phone.label }}
+                                {{ info_forms.phone }}
+                            </div>
+                            <div class="form-group">
+                                {{ info_forms.address.label }}
+                                {{ info_forms.address }}
+                            </div>
+                            <button type="submit" class="btn oneMusic-btn mt-30" name="btnUpdate">Update</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="login-content">
+                    <h3>Change Your Password</h3>
+                    <div class="login-form">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="col-md-12">
+                                {{ result_change_password|safe }}
+                            </div>
+                            <div class="form-group">
+                                {{ password_forms.old_password.label }}
+                                {{ password_forms.old_password }}
+                            </div>
+                            <div class="form-group">
+                                {{ password_forms.new_password.label }}
+                                {{ password_forms.new_password }}
+                            </div>
+                            <div class="form-group">
+                                {{ password_forms.confirm_password.label }}
+                                {{ password_forms.confirm_password }}
+                            </div>
+                            <button type="submit" class="btn oneMusic-btn mt-30" name="btnChangePassword">Change</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    <!-- ##### Breadcumb Area End ##### -->
+</section>
+<!-- ##### User Infomation End ##### -->
 
-    <section class="login-area section-padding-100">
-        <div class="container">
-            <div class="row ">
-                <div class="col-lg-6">
-                    <div class="login-content">
-                        <h3>Your Infomation</h3>
-                        <div class="login-form">
-                            <form method="post">
-                                <div class="col-md-12">
-                                    {{ result_update_info|safe }}
-                                </div>
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    {{ info_forms.first_name.label }}
-                                    {{ info_forms.first_name }}
-                                </div>
-                                <div class="form-group">
-                                    {{ info_forms.last_name.label }}
-                                    {{ info_forms.last_name }}
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email"
-                                        value="{{ request.session.s_user.email }}" disabled>
-                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
-                                </div>
-                                <div class="form-group">
-                                    {{ info_forms.phone.label }}
-                                    {{ info_forms.phone }}
-                                </div>
-                                <div class="form-group">
-                                    {{ info_forms.address.label }}
-                                    {{ info_forms.address }}
-                                </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30" name="btnUpdate">Update</button>
-                            </form>
-                        </div>
-                    </div>
+<!-- ##### Order History Start ##### -->
+<section class="login-area section-padding-100">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-12">
+                <h3>Your Payment History</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Order Date</th>
+                                <th>Total Cost</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>#{{ order.pk }}</td>
+                                    <td>{{ order.created }}</td>
+                                    <td>{{ order.total}} $</td>
+                                    <td>
+                                        {% if order.status == 1 %}
+                                        <span class="badge badge-pill badge-success">Delivered</span>
+                                        {% else %}
+                                        <span class="badge badge-pill badge-danger">On Delivery</span>
+                                        {% endif %}
+                                    </td>
+                                    <td><button class="btn" data-toggle="modal" data-target="#o{{ order.pk }}">Details</button></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-                <div class="col-lg-6">
-                    <div class="login-content">
-                        <h3>Change Your Password</h3>
-                        <div class="login-form">
-                            <form method="post">
-                                {% csrf_token %}
-                                <div class="col-md-12">
-                                    {{ result_change_password|safe }}
-                                </div>
-                                <div class="form-group">
-                                    {{ password_forms.old_password.label }}
-                                    {{ password_forms.old_password }}
-                                </div>
-                                <div class="form-group">
-                                    {{ password_forms.new_password.label }}
-                                    {{ password_forms.new_password }}
-                                </div>
-                                <div class="form-group">
-                                    {{ password_forms.confirm_password.label }}
-                                    {{ password_forms.confirm_password }}
-                                </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30" name="btnChangePassword">Change</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Order History End ##### -->
 
-                <div class="col-lg-6">
-                    <div class="login-content">
-                        <h3>Your Order History</h3>
-                        <div class="login-form">
-                            <form method="post">
-                                <div class="col-md-12">
-                                    {{ result_update_info|safe }}
-                                </div>
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    {{ info_forms.first_name.label }}
-                                    {{ info_forms.first_name }}
-                                </div>
-                                <div class="form-group">
-                                    {{ info_forms.last_name.label }}
-                                    {{ info_forms.last_name }}
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" type="text" placeholder="Email"
-                                        value="{{ request.session.s_user.email }}" disabled>
-                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
-                                </div>
-                                <div class="form-group">
-                                    {{ info_forms.phone.label }}
-                                    {{ info_forms.phone }}
-                                </div>
-                                <div class="form-group">
-                                    {{ info_forms.address.label }}
-                                    {{ info_forms.address }}
-                                </div>
-                                <button type="submit" class="btn oneMusic-btn mt-30" name="btnUpdate">Update</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
+<!-- Modal -->
+{% for order_id, order_items in dict_orders.items %}
+<div class="modal fade" id="o{{ order_id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order Id #{{ order_id }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Num of Tickets</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Total amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order_item in order_items %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ order_item.event_name }}</td>
+                            <td>{{ order_item.quantity }}</td>
+                            <td>{{ order_item.price }}</td>
+                            <td>
+                                {% with total=order_item.quantity|mul:order_item.price %}
+                                    {{ total }} $
+                                {% endwith %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr style="color: red;">
+                            <td colspan="5" class="text-center"><h5><b>Final Total</b></h5></td>
+                            <td><h5><b>{{ order_items.0.total_price }}$</b></h5></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
-    </section>
+    </div>
+</div>
+{% endfor %}
 
 {% endblock %}

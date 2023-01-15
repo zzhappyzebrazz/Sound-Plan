@@ -6,6 +6,7 @@ from sound_plan.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from cart.models import Order, OrderItem
+from player.models import Event
 
 hasher = PBKDF2PasswordHasher()
 
@@ -241,14 +242,21 @@ def my_account(request):
                 '''
                 
     #Show user order history
-    order_history = Order.objects.filter(listener_id=user['id']).order_by('-created')
-    for order in order_history:
-        print(order.total)
-        print(order.created)
-        order_items = OrderItem.objects.filter(order_id=order.id)
-        for item in order_items:
-            print(item.price)
-            print(item.quantity)
+    orders = Order.objects.filter(listener_id=user['id']).order_by('-created')
+    dict_orders = {}
+    for order in orders:
+        order_items = list(OrderItem.objects.filter(order=order.id).values())
+        for order_item in order_items:
+            event = Event.objects.get(pk=order_item['event_id'])
+            order_item['event_name'] = event.name
+            order_item['total_price'] = order.total
+        else:
+            dict_order_items = {
+                order.pk: order_items
+            }
+            dict_orders.update(dict_order_items)
+    print(dict_orders)
+    
     
     #Show user Play list
     
@@ -260,7 +268,8 @@ def my_account(request):
         'password_forms' : password_forms,
         'result_update_info' : result_update_info,
         'result_change_password' : result_change_password,
-        'order_history' : order_history,
+        'dict_orders' : dict_orders,
+        'orders' : orders,
     })
 
 def logout(request):
