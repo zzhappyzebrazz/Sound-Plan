@@ -3,6 +3,7 @@ from player.forms import *
 from player.models import *
 from sound_plan.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.validators import validate_email
 import feedparser
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Q
@@ -129,20 +130,57 @@ def contact(request):
     })
 
 def event(request):
-    events = Event.objects.order_by('-date')
-    for event in events:
-        print(event.artists)
+    all_events = Event.objects.order_by('-date')
+    
+    events_per_page = 4
+    events = paginator(request, all_events, events_per_page)
+    
+    validate_email_result = ''
+    
+    if request.POST.get('subscribe_mail'):
+        email = request.POST.get('subscribe_mail')
+        print(email)
+        try:
+            validate_email(email)
+            
+            subject = 'Subscribe to SOUND-PLAN Newsletter'
+            content = f'<p>Hello from Sound Plan to you!!! <b>{ email }</b>,</p>'
+            content += '<p>We are happy to received your welcome and Subscribe to our Newsletter service!</p>'
+            content += f'<p>Hope that you wil have a wonderful experienced here with us. And stay up-to-date with the music world.</p>'
+            content += f'<p>You will start receiving Newsletter via Registered E-Mail.</p>'
+            content += f'<p>Regards</p>'
+            content += f'<p>SoundPlan</p>'
+            
+            # send_mail(post.subject, content, EMAIL_HOST_USER, [post.email])
+            msg = EmailMultiAlternatives(subject, content, EMAIL_HOST_USER, [email])
+            msg.attach_alternative(content, 'text/html')
+            msg.send()
+
+            validate_email_result = '''
+            <div class="alert alert-success" role="alert">
+                Successful Subscribe to the SoundPlan Newsletter!
+            </div>
+            '''
+        except forms.ValidationError:
+            validate_email_result = '''
+            <div class="alert alert-danger" role="alert">
+                E-Mail is not in Wright Format!
+            </div>
+            '''
+        
     return render(request, 'player/event.html', {
         'events' : events,
+        'validate_email_result' : validate_email_result,
     })
 
 def single_album(request, id):
     album = Album.objects.get(id=id)
-    songs = Song.objects.filter(album_id=album.id)
-    print(str(album.public_day))
-    print("==================")
-    print(songs)
-    print("==================")
+    all_songs = Song.objects.filter(album_id=album.id)
+
+
+    songs_per_page = 8
+    songs = paginator(request, all_songs, songs_per_page)
+
     return render(request, 'player/single-album.html', {
         'album' : album,
         'songs' : songs,

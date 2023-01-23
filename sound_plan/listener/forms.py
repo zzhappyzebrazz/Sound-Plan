@@ -67,3 +67,14 @@ class FormUserChangePassword(forms.Form):
     confirm_password = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(attrs={
         "class": "form-control", "placeholder": "Confirm Password",
     }))
+    
+class FormForgotPassword(forms.Form):
+    email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "We will send an OTP code to this email, Please make sure it correct!",
+    }))
+    otp = forms.CharField(label='OTP', widget=forms.TextInput(attrs={
+        "class": "form-control", "placeholder": "OTP",
+    }))
+    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput(attrs={
+        "class": "form-control", "placeholder": "New Password",
+    }))

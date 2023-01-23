@@ -7,9 +7,11 @@ from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from cart.models import Order, OrderItem
 from player.models import Event
+from django.core.validators import validate_email
+from random import choice
+import string
 
 hasher = PBKDF2PasswordHasher()
-
 
 # Create your views here.
 def login(request):
@@ -140,14 +142,12 @@ def register(request):
     })
     
 def my_account(request):
-    #TO-DO:
-
-    # Change password
+    
     if 's_user' not in request.session:
-        print('User unregisterd')
+        print('User un-registered')
         return redirect('player:index')
     
-    # Show user infomation CHECK
+    # Show user information CHECK
     user = request.session['s_user']
     print(user)
 
@@ -158,7 +158,7 @@ def my_account(request):
         'address' : user['address'],
     })
             
-    # Update user infomation
+    # Update user information
     result_update_info = ''
     user_data = Listener.objects.get(id=user['id'])
     print(user_data.password)
@@ -180,7 +180,7 @@ def my_account(request):
             
             user_data.save()
             
-            #Update to sesstion
+            #Update to session
             user['first_name'] = first_name
             user['last_name'] = last_name
             user['phone'] = phone
@@ -195,51 +195,52 @@ def my_account(request):
         else:
             result_update_info = '''
                 <div class="alert alert-danger" role="alert">
-                    Plase Fill out the Form!!!
+                    Please Fill out the Form!!!
                 </div>
             '''
     
+    # Change password
     result_change_password = ''
     password_forms = FormUserChangePassword()
 
     if request.POST.get('old_password'):
-            password_forms = FormUserChangePassword(request.POST)
-            print(password_forms.errors)
-            if password_forms.is_valid():
-                print('Get valid POST from Change')
-                
-                old_password = hasher.encode(password_forms.cleaned_data['old_password'], 'magic string')
-                new_password = hasher.encode(password_forms.cleaned_data['new_password'], 'magic string')
-                confirm_password = hasher.encode(password_forms.cleaned_data['confirm_password'], 'magic string')
-                if old_password == user_data.password:
-                    if new_password == confirm_password:
-                        user_data.password = new_password
-                        user_data.save()
-                        result_change_password = '''
-                        <div class="alert alert-success" role="alert">
-                            Password Updated!!!
-                        </div>
-                        '''
-                        # return redirect('listener:logout')
-                    else:
-                        result_change_password = '''
-                        <div class="alert alert-danger" role="alert">
-                            Confirm Password Not Match!!!
-                        </div>
-                        '''
+        password_forms = FormUserChangePassword(request.POST)
+        print(password_forms.errors)
+        if password_forms.is_valid():
+            print('Get valid POST from Change')
+            
+            old_password = hasher.encode(password_forms.cleaned_data['old_password'], 'magic string')
+            new_password = hasher.encode(password_forms.cleaned_data['new_password'], 'magic string')
+            confirm_password = hasher.encode(password_forms.cleaned_data['confirm_password'], 'magic string')
+            if old_password == user_data.password:
+                if new_password == confirm_password:
+                    user_data.password = new_password
+                    user_data.save()
+                    result_change_password = '''
+                    <div class="alert alert-success" role="alert">
+                        Password Updated!!!
+                    </div>
+                    '''
+                    # return redirect('listener:logout')
                 else:
                     result_change_password = '''
                     <div class="alert alert-danger" role="alert">
-                        Old Password Incorrect!!!
+                        Confirm Password Not Match!!!
                     </div>
                     '''
-
             else:
                 result_change_password = '''
-                    <div class="alert alert-danger" role="alert">
-                        Plase Fill out the Form!!!
-                    </div>
+                <div class="alert alert-danger" role="alert">
+                    Old Password Incorrect!!!
+                </div>
                 '''
+
+        else:
+            result_change_password = '''
+                <div class="alert alert-danger" role="alert">
+                    Please Fill out the Form!!!
+                </div>
+            '''
                 
     #Show user order history
     orders = Order.objects.filter(listener_id=user['id']).order_by('-created')
@@ -279,4 +280,99 @@ def logout(request):
         print("=========================")
     return redirect('player:index')
 
+otp = 0
+forgot_password_email = ''
 
+def forgotPassword(request):
+    is_forgot_password = True
+    is_received_email = False
+    is_email_form = True
+    headline1 = "Listen to Your Playlist again!!!"
+    headline2 = "Forgot Password"
+    validate_email = 0
+    validate_otp = 0
+
+    forms = FormForgotPassword()
+
+    if request.POST.get('email'):
+        print("Here============")
+        email = request.POST.get('email')
+        forms = FormForgotPassword(request.POST)
+        # email = forms.cleaned_data['email']
+        print(email)
+        dict_user = Listener.objects.filter(email=email)
+        print(dict_user)
+        if dict_user.count() > 0:
+            user = dict_user.values()[0]
+            validate_email = '''
+            <div class="alert alert-success" role="alert">
+                OTP Code sent to your E-Mail account.
+            </div>
+            '''
+            is_received_email = True
+            numbers = string.digits
+            globals()['otp'] = ''.join(choice(numbers) for _ in range(4))
+            print(globals()['otp'])
+            globals()['forgot_password_email'] = email
+            
+            #Send OTP mail
+            subject = 'Sound Plan Recovery OTP Code'
+            user_name = str(user['first_name']) + ' ' + str(user['last_name'])
+
+            content = f'<p>Hi <b>{ user_name }</b>!,</p>'
+            content += '<p>This is your Recovery code to your Forgot Password</p>'
+            content += f'<h2>{ otp }</h2>'
+            content += f'<p>Please ignore this E-Mail if this action is not Acknowledge by you.</p>'
+            content += f'<p>Regards,</p>'
+            content += f'<p>SoundPlan</p>'
+
+            # send_mail(post.subject, content, EMAIL_HOST_USER, [post.email])
+            msg = EmailMultiAlternatives(subject, content, EMAIL_HOST_USER, [email])
+            msg.attach_alternative(content, 'text/html')
+            msg.send()
+            print("Successful Sent OTP mail")
+            is_email_form = False
+        else:
+            validate_email = '''
+            <div class="alert alert-danger" role="alert">
+                E-Mail not Found!
+            </div>
+            '''
+
+    if request.POST.get('otp'):
+        user_otp = request.POST.get('otp')
+        new_password = request.POST.get('new_password')
+        print("Get OTP ", user_otp)
+        print("Get new password ", new_password)
+        print(globals()['otp'])
+        user = Listener.objects.get(email=globals()['forgot_password_email'])
+        print(user)
+        if user_otp == globals()['otp']:
+            change_password = hasher.encode(new_password, 'magic string')
+            user.password = change_password
+            user.save()
+            validate_otp = '''
+            <div class="alert alert-success" role="alert">
+                Password change successfully!
+            </div>
+            '''
+            return redirect('listener:login')
+        else:
+            is_received_email = True
+            is_email_form = False
+            validate_otp = '''
+            <div class="alert alert-danger" role="alert">
+                OTP Not Match!
+            </div>
+            '''
+
+    return render(request, 'player/login.html', {
+        'is_forgot_password' : is_forgot_password,
+        'headline1' : headline1,
+        'headline2' : headline2,
+        'forms' : forms,
+        'is_received_email' : is_received_email,
+        'is_email_form' : is_email_form,
+        'validate_email' : validate_email,
+        'validate_otp' : validate_otp,
+    })

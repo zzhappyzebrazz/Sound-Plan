@@ -66,6 +66,68 @@
     </section>
     <!-- ##### Login Area End ##### -->
 
+{% elif is_forgot_password %}
+
+    <!-- ##### Breadcumb Area Start ##### -->
+    <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/breadcumb3.jpg' %});">
+        <div class="bradcumbContent">
+            <p>{{ headline1 }}</p>
+            <h2>{{ headline2 }}</h2>
+        </div>
+    </section>
+    <!-- ##### Breadcumb Area End ##### -->
+
+    <!-- ##### Login Area Start ##### -->
+    <section class="login-area section-padding-100">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-8">
+                    <div class="login-content">
+                        <h3>Forgot your Password?</h3>
+                        <!-- Login Form -->
+                        {% if is_email_form %}
+                        <div class="login-form">
+                            <form method="post">
+                                {% csrf_token %}
+                                {% if validate_email %}
+                                {{ validate_email | safe }}
+                                {% endif %}
+                                <div class="form-group">
+                                    {{ forms.email.label }}
+                                    {{ forms.email }}
+                                    <small id="emailHelp" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your email with anyone else.</small>
+                                </div>
+                                <button type="submit" class="btn oneMusic-btn mt-30">Send Code</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                        {% if is_received_email %}
+                        <div class="login-form">
+                            <form method="post">
+                                {% csrf_token %}
+                                {% if validate_otp %}
+                                {{ validate_otp | safe }}
+                                {% endif %}
+                                <div class="form-group">
+                                    {{ forms.otp.label }}
+                                    {{ forms.otp }}
+                                </div>
+                                <div class="form-group">
+                                    {{ forms.new_password.label }}
+                                    {{ forms.new_password }}
+                                </div>
+                                <button type="submit" class="btn oneMusic-btn mt-30">Change Password</button>
+                            </form>
+                        </div>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Login Area End ##### -->
+
 {% else %}
     <!-- ##### Breadcumb Area Start ##### -->
     <section class="breadcumb-area bg-img bg-overlay" style="background-image: url({% static 'player/img/bg-img/breadcumb3.jpg' %});">
@@ -100,10 +162,10 @@
                                     {{ forms.password }}
                                 </div>
                                 <div>
-                                    <a href="{% url 'listener:register' %}">Don't have an accoount? Register here!</a>
+                                    <a href="{% url 'listener:register' %}">Don't have an Account? Register here!</a>
                                 </div>
                                 <div>
-                                    <a href="">Forgot password?</a>
+                                    <a href="{% url 'listener:forgotPassword' %}">Forgot password?</a>
                                 </div>
                                 <button type="submit" class="btn oneMusic-btn mt-30">Login</button>
                             </form>

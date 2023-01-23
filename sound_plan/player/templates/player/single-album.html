@@ -45,7 +45,7 @@
                         </div>
                         <div class="song-play-area">
                             <div class="song-name">
-                                <p>{{forloop.counter}}. {{ song }}</p>
+                                <p> {{ song }}</p>
                             </div>
                             <audio preload="auto" controls>
                                 <source src="{{ song.audio.url }}">
@@ -54,6 +54,44 @@
                     </div>
                 </div>
                 {% endfor %}
+
+                <!-- Pagination -->
+                <div class="oneMusic-pagination-area wow fadeInUp" data-wow-delay="300ms">
+                    <nav>
+                        <ul class="pagination">
+                            {% comment %} <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                            <li class="page-item"><a class="page-link" href="#">02</a></li>
+                            <li class="page-item"><a class="page-link" href="#">03</a></li> {% endcomment %}
+                            {% if songs.has_other_pages %}
+                            {% if songs.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ songs.previous_page_number }}">Previous</a>
+                            </li>
+                            {% else %}
+                            <div class="disable"><span></span></div>
+                            {% endif %}
+
+                            {% for i in songs.paginator.page_range %}
+                            {% if songs.number == i %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ i }}&{{ url_search }}">{{ i }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}&{{ url_search }}">{{ i }}</a></li>
+                            {% endif %}
+                            {% endfor %}
+                        
+                            {% if songs.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ songs.next_page_number }}&{{ url_search }}">Next</a>
+                            </li>
+                            {% else %}
+                            <div class="disable"><span></span></div>
+                            {% endif %}
+                        
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+
 
             </div>
         </div>

@@ -74,14 +74,5 @@ class Cart(object):
         del self.session[settings.CART_SESSION_ID]
         self.save()
 
-    def get_total_price(self):  # Tính tổng: Tạm tính
+    def get_total_price(self):
         return sum(Decimal(item['price']) * item['quantity'] * 1 for item in self.cart.values())
-
-
-    # def get_discount(self):  # Giảm giá
-    #     return sum(Decimal(item['price']) * item['quantity'] * (1 - Decimal(item['coupon'])) 
-    #                   for item in self.cart.values())
-
-    # def get_final_total_price(self):  # Tiền phải trả
-    #     return sum(Decimal(item['price']) * item['quantity'] * Decimal(item['coupon']) for item in self.cart.values())
-

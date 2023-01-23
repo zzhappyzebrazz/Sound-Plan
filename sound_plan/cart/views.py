@@ -3,7 +3,10 @@ from cart.cart import Cart
 from player.models import Event
 from listener.models import Listener
 from cart.models import Order, OrderItem
-
+from django.core.mail import send_mail, EmailMultiAlternatives
+from sound_plan.settings import EMAIL_HOST_USER, BASE_DIR
+from email.mime.image import MIMEImage
+import os
 # Create your views here.
 
 def cart(request):
@@ -37,10 +40,10 @@ def cart(request):
 
     if request.POST.get('btnCheckout'):
         if user:
-            listerner = Listener.objects.get(id=user['id'])
+            listener = Listener.objects.get(id=user['id'])
             # Save Order
             order = Order()
-            order.listener = listerner
+            order.listener = listener
             order.total = cart.get_total_price()
             order.save()
 
@@ -52,6 +55,36 @@ def cart(request):
                                         quantity=item['quantity'])
             
             # Send Mail
+            name = listener.first_name + ' ' + listener.last_name
+            #Send mail here
+            subject = 'Order Confirmation at SOUND-PLAN '
+            content = f'<p>Hello from Sound-Plan to you!!! <b> { name } </b>,</p>'
+            content += '<p>We are happy to received your welcome and Order tickets at Sound-Plan!</p>'
+            content += f'<p>Hope that you wil have a wonderful time with your friends and seeing you favorite Artists.</p>'
+            content += f'<p>Show this QR code at the Event and You are done.!!!</p>'
+            content += f'<img src="cid:QR code.png" />'
+            content += f'<p>SoundPlan</p>'
+            
+            # send_mail(post.subject, content, EMAIL_HOST_USER, [post.email])
+            
+            msg = EmailMultiAlternatives(
+                subject,
+                content,
+                EMAIL_HOST_USER,
+                [listener.email]
+            )
+            msg.mixed_subtype = 'related'
+            msg.attach_alternative(content, "text/html")
+            img_dir = 'player/static/player/img/QRcode.png'
+            file_path = os.path.join(BASE_DIR, img_dir)
+            print('file path')
+            print(file_path)
+            with open(file_path, 'rb') as f:
+                img = MIMEImage(f.read())
+                img.add_header('Content-ID', '<{name}>'.format(name='QR code.png'))
+                img.add_header('Content-Disposition', 'inline', filename='QR code.png')
+            msg.attach(img)
+            msg.send()
 
             # Clear Cart
             cart.clear()
@@ -70,39 +103,6 @@ def cart(request):
         'cart': cart,
         'check_out' : check_out,
         'user' : user,
-    })
-
-def checkout(request):
-    cart = Cart(request)
-    
-    if len(cart) == 0:
-        return redirect('cart:cart')
-    
-    if request.POST.get('bntPlayOrder'):
-        listener = Listener.objects.get(id=request.session.get('s_user')['id'])
-        
-        #save order
-        order = Order()
-        order.listener = listener
-        order.total = cart.get_total_price()
-        order.save()
-        
-        # save Order Item
-        for item in cart:
-            OrderItem.objects.create(order=order,
-                                     event=item['event'],
-                                     price=item['price'],
-                                     quantity=item['quantity'])
-            
-        #Send mail here
-        
-        # Play Order successful
-        return render(request, 'player/order-result.html', {
-            'cart' : cart,
-        })
-        
-    return render(request, 'player/checkout.html', {
-        'cart' : cart,
     })
 
 def buy_now(request, event_id):

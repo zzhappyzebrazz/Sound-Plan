@@ -103,7 +103,7 @@
                         <tbody>
                             {% for order in orders %}
                                 <tr>
-                                    <td>#{{ order.pk }}</td>
+                                    <td>#{{ forloop.counter }}</td>
                                     <td>{{ order.created }}</td>
                                     <td>{{ order.total}} $</td>
                                     <td>
