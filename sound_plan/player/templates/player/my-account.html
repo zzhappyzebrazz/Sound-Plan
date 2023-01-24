@@ -177,4 +177,42 @@
 </div>
 {% endfor %}
 
+<!-- ##### Order History Start ##### -->
+<div class="one-music-songs-area mb-70">
+    <div class="container">
+        <div class="row">
+
+            {% for song in playlist_songs %}
+            <!-- Single Song Area -->
+            <div class="col-10">
+                <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
+                    <div class="song-thumbnail">
+                        <img src="{{ song.album.album_cover.url }}" alt="{{ song }}">
+                    </div>
+                    <div class="song-play-area">
+                        <div class="song-name">
+                            <p> {{ song }}</p>
+                        </div>
+                        <audio preload="auto" controls>
+                            <source src="{{ song.audio.url }}">
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="col-2" style="position: absolute; bottom: 40px;">
+                        <button type="submit" class="single-web-icon" name="remove" value="{{ song.id }}" id="remove">
+                            <i class="icon-trash" style="font-size: 2em;"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- ##### Order History End ##### -->
+
 {% endblock %}

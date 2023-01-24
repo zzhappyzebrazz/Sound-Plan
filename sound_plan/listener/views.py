@@ -1,12 +1,12 @@
 
 from django.shortcuts import render, redirect
 from listener.forms import *
-from listener.models import Listener
+from listener.models import Listener, Playlist
 from sound_plan.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail, EmailMultiAlternatives
 from django.contrib.auth.hashers import PBKDF2PasswordHasher
 from cart.models import Order, OrderItem
-from player.models import Event
+from player.models import Event, Song
 from django.core.validators import validate_email
 from random import choice
 import string
@@ -255,13 +255,23 @@ def my_account(request):
             dict_order_items = {
                 order.pk: order_items
             }
-            dict_orders.update(dict_order_items)
-    print(dict_orders)
-    
+            dict_orders.update(dict_order_items)    
     
     #Show user Play list
-    
-    
+    user_playlist = Playlist.objects.filter(listener_id=user_data.id)
+    playlist = Playlist()
+    if user_playlist.count() > 0:
+        playlist_id = user_playlist.values()[0]
+        playlist = Playlist.objects.get(id=playlist_id['id'])
+        playlist_songs = playlist.songs.all()
+    else:
+        print(user_playlist)
+        
+    if request.method == 'POST':
+        song_id = int(request.POST.get('remove'))
+        if song_id > 0:
+            song = Song.objects.get(id=song_id)
+            playlist.songs.remove(song)
     
     return render(request, 'player/my-account.html', {
         'user' : user,
@@ -271,6 +281,7 @@ def my_account(request):
         'result_change_password' : result_change_password,
         'dict_orders' : dict_orders,
         'orders' : orders,
+        'playlist_songs' : playlist_songs,
     })
 
 def logout(request):

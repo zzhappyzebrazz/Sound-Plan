@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.http import JsonResponse
 from rest_framework import viewsets, permissions
 from player.serializers import SongSerializers, AlbumSerializers, ArtistSerializers
+from listener.models import Playlist, Listener
 
 def paginator(request, all_items, num_of_items_per_page):
     page = request.GET.get('page', 1) # First page
@@ -40,7 +41,9 @@ def index(request):
     new_hits.append(Song.objects.get(id=120))
     new_hits.append(Song.objects.get(id=326))
     new_hits.append(Song.objects.get(id=392))
-    print(popular_artist)
+    
+    add_to_playlist(request)
+    
     return render(request, 'player/index.html', {
         'all_artist' : all_artist,
         'new_album' : new_album,
@@ -181,6 +184,8 @@ def single_album(request, id):
     songs_per_page = 8
     songs = paginator(request, all_songs, songs_per_page)
 
+    add_to_playlist(request)
+
     return render(request, 'player/single-album.html', {
         'album' : album,
         'songs' : songs,
@@ -193,6 +198,40 @@ def artist(request, id):
         'artist' : artist,
         'albums' : albums,
     })
+    
+def material_for_development(request):
+    return render(request, 'player/material-for-development.html')
+
+def add_to_playlist(request):
+    if request.method == 'POST':
+        song_id = request.POST.get('add')
+        print(song_id)
+        if 's_user' in request.session:
+            user_id = request.session['s_user']
+            user = Listener.objects.get(id=user_id['id'])
+            print(user)
+            print("Add to playlist button")
+            q_playlist = Playlist.objects.filter(listener_id=user.id)
+            if len(q_playlist) > 0:
+                playlist_id = q_playlist.values()[0]['id']
+                playlist = Playlist.objects.get(id=playlist_id)
+                print("already has a playlist")
+                song = Song.objects.get(id=song_id)
+                playlist.songs.add(song)
+                print(playlist.songs.all())
+
+            else:
+                playlist = Playlist()
+                playlist.playlist_name = user.email
+                playlist.listener = user
+                playlist.save()
+                print("create new playlist")
+                print(playlist)
+                song = Song.objects.get(id=song_id)
+                playlist.songs.add(song)
+                print(playlist.songs.all())
+                
+    return
     
 # Web service từ rest_framework
 class SongViewSet(viewsets.ModelViewSet):

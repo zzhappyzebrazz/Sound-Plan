@@ -38,7 +38,7 @@
 
                 {% for song in songs %}
                 <!-- Single Song Area -->
-                <div class="col-12">
+                <div class="col-10">
                     <div class="single-song-area mb-30 d-flex flex-wrap align-items-end">
                         <div class="song-thumbnail">
                             <img src="{{ song.album.album_cover.url }}" alt="{{ song }}">
@@ -52,6 +52,16 @@
                             </audio>
                         </div>
                     </div>
+                </div>
+                <div class="col-2">
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="col-2" style="position: absolute; bottom: 40px;">
+                            <button type="submit" class="single-web-icon" name="add" value="{{ song.id }}" id="add">
+                                <i class="icon-heart" style="font-size: 2em;"></i>
+                            </button>
+                        </div>
+                    </form>
                 </div>
                 {% endfor %}
 
