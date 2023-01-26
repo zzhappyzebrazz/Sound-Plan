@@ -241,7 +241,7 @@ def my_account(request):
                     Please Fill out the Form!!!
                 </div>
             '''
-                
+      
     #Show user order history
     orders = Order.objects.filter(listener_id=user['id']).order_by('-created')
     dict_orders = {}
@@ -256,18 +256,19 @@ def my_account(request):
                 order.pk: order_items
             }
             dict_orders.update(dict_order_items)    
-    
+
     #Show user Play list
     user_playlist = Playlist.objects.filter(listener_id=user_data.id)
     playlist = Playlist()
+    playlist_songs = ''
     if user_playlist.count() > 0:
         playlist_id = user_playlist.values()[0]
         playlist = Playlist.objects.get(id=playlist_id['id'])
         playlist_songs = playlist.songs.all()
     else:
         print(user_playlist)
-        
-    if request.method == 'POST':
+
+    if request.POST.get('remove'):
         song_id = int(request.POST.get('remove'))
         if song_id > 0:
             song = Song.objects.get(id=song_id)
